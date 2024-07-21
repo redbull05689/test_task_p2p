@@ -1,0 +1,19 @@
+groups:
+- name: flask_app_alerts
+  rules:
+  - alert: HighResponseTime
+    expr: histogram_quantile(0.95, rate(flask_request_latency_seconds_bucket[5m])) > 0.5
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High response time"
+      description: "The 95th percentile of response time is greater than 0.5 seconds for more than 5 minutes."
+  - alert: InstanceDown
+    expr: up{instance="flask_server:8000", job="flask_server"}
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance down"
+      description: "The instance is down for more than 1 minute."
