@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - "9000:9000"
+      - "8000:8000"
     deploy:
       replicas: 1
       resources:
@@ -35,12 +36,12 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
-      - ./prometheus/alert_rules.yaml:/etc/prometheus/alert_rules.yaml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml
     ports:
       - "9090:9090"
 
-  node_exporter:
-    image: prom/node-exporter
-    ports:
-      - "9100:9100"
+  # node_exporter:
+  #   image: prom/node-exporter
+  #   ports:
+  #     - "9100:9100"
